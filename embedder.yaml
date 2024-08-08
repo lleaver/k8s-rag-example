@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nv-embedqa-e5-v
+  name: nv-embedqa-e5-v5
 spec:
   containers:
   - name: nv-embedqa-e5-v5
-    image: "nvcr.io/nim/$NIM_MODEL_NAME:1.0.0"
+    image: "nvcr.io/nim/nvidia/nv-embedqa-e5-v5:1.0.0"
     env:
     - name: NGC_API_KEY
       valueFrom:
