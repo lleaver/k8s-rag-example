@@ -15,11 +15,6 @@ spec:
     volumeMounts:
     - mountPath: /opt/nim/.cache
       name: ngc-cache
-    resources:
-      limits:
-        nvidia.com/gpu: 1
-    securityContext:
-      runAsUser: '$oauthtoken'
   volumes:
   - name: ngc-cache
     hostPath:
