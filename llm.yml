@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: llama3-8b
+spec:
+  containers:
+  - name: llama3-8b
+    image: "nvcr.io/nvidia/nim/nim-llm/meta-llama3-8b-instruct"
+    env:
+    - name: NGC_API_KEY
+      valueFrom:
+        secretKeyRef:
+          name: ngc-api
+          key: NGC_CLI_API_KEY
+    volumeMounts:
+    - mountPath: /opt/nim/.cache
+      name: ngc-cache
+    resources:
+      limits:
+        nvidia.com/gpu: 1
+    securityContext:
+      runAsUser: '$oauthtoken'
+  volumes:
+  - name: ngc-cache
+    hostPath:
+      path: ~/.cache/nim
+  imagePullSecrets:
+  - name: nvcrimagepullsecret
