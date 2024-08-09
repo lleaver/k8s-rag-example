@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
   - name: llama3-8b
-    image: "nvcr.io/nim/meta/llama3-8b-instruct"
+    image: "nvcr.io/nim/meta/llama3-8b-instruct:1.0.3"
     env:
     - name: NGC_API_KEY
       valueFrom:
