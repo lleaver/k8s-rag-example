@@ -6,6 +6,8 @@ spec:
   containers:
   - name: nv-embedqa-e5-v5
     image: "nvcr.io/nim/nvidia/nv-embedqa-e5-v5:1.0.0"
+    ports:
+    - containerPort: 8000
     env:
     - name: NGC_API_KEY
       valueFrom:
