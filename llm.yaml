@@ -12,12 +12,5 @@ spec:
         secretKeyRef:
           name: ngc-api
           key: NGC_CLI_API_KEY
-    volumeMounts:
-    - mountPath: /opt/nim/.cache
-      name: ngc-cache
-  volumes:
-  - name: ngc-cache
-    hostPath:
-      path: ~/.cache/nim
   imagePullSecrets:
   - name: nvcrimagepullsecret
