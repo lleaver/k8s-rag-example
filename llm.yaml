@@ -9,7 +9,7 @@ spec:
   - name: llama3-8b
     image: "nvcr.io/nim/meta/llama3-8b-instruct:1.0.3"
     ports:
-    - containerPort: 8080
+    - containerPort: 8000
     env:
     - name: NGC_API_KEY
       valueFrom:
