@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: embedder-nim-service
 spec:
+  type: NodePort
   selector:
     app: embedder-nim
   ports:
