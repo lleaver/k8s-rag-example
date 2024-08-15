@@ -6,6 +6,8 @@ spec:
   selector:
     app: llm-nim
   type: LoadBalancer
+  externalIPs:
+  - 192.168.0.10
   ports:
   - name: http
     port: 80
