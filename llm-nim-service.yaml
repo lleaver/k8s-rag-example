@@ -4,9 +4,10 @@ metadata:
   name: llm-nim-service
   namespace: "default"
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: llm-nim
   ports:
-  - port: 80
+  - protocol: TCP
+    port: 80
     targetPort: 8000
