@@ -8,7 +8,9 @@ from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from langchain_community.vectorstores import FAISS
+from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnablePassthrough
 
 data_file = "example.txt" #add path to your example data!
 
@@ -35,18 +37,30 @@ db = FAISS.from_documents(docs, embedder)
 ## Define compression retriever for retrieval + reranking
 retriever = db.as_retriever()
 
+## Create prompt
+prompt = PromptTemplate.from_template(
+        "You are an assistant for question-answering tasks. "
+        "Use the following pieces of retrieved context to answer the question."
+        "If you don't know the answer, just say that you don't know. Be concise."
+        "Question: {question} Context: {context}"
+        "Answer: ")
+
 def format_docs(docs):
     return "\n\n".join([d.page_content for d in docs])
 
 ## define chain
-chain = llm | StrOutputParser()
+rag_chain = (
+    {"context": retriever | format_docs, "question": RunnablePassthrough()}
+    | prompt
+    | llm
+    | StrOutputParser()
+)
 
-def ask_question(question, context):
-    """returns a response from the llm"""
-    full_question = ("context: " + str(context) + "question :" + str(question))
-    ans = llm.invoke(full_question)
-    return ans.content
+## let's make it interactive!
+q = "Please say hello!"
+print("Ask a question about your data! To exit, type exit. \n")
 
-q = "What is the main topic of the provided context?"
-context = format_docs(retriever.invoke(q))
-print(ask_question(q, context))
+while (q != "exit"):
+    ans = rag_chain.invoke(q)
+    print("LLM: " + ans)
+    q = input("User: ")
